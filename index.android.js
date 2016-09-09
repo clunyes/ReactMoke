@@ -3,15 +3,9 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-import React, {Component, PropTypes} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    ListView
-} from 'react-native';
-var Main = require('./core/main/main.js');
+import React, {Component} from "react";
+import {AppRegistry, StyleSheet, View} from "react-native";
+var Main = require('./js/main/main.js');
 
 class FirstRnProject extends Component {
     constructor(props) {

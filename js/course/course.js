@@ -2,16 +2,8 @@
  * Created by Administrator on 2016/8/25.
  */
 'use strict'
-import React, {Component} from 'react';
-import {
-    View,
-    Text,
-    Image,
-    ListView,
-    ActivityIndicator,
-    TouchableOpacity,
-} from 'react-native';
-import ContentStyle from './coursestyle.js';
+import React, {Component} from "react";
+import {View, Text, Image, ListView, ActivityIndicator, TouchableOpacity, StyleSheet} from "react-native";
 const httpUrl = 'http://api.moocollege.com/mycloudedu/course/union/share_courses?current=1&page_size=10&union_id=19';
 const imgUrlPre = 'http://api.moocollege.com/mycloudedu/course/picture/get?width=340&course_id='
 
@@ -39,11 +31,11 @@ class CourseList extends Component {
         return (
             <View>
                 <TopBar/>
-                <View style={ContentStyle.contentStyle.conentStyle}>
+                <View style={style.conentStyle}>
                     <ListView
-                        style={ContentStyle.contentStyle.listStyle}
+                        style={style.listStyle}
                         dataSource={this.state.courses}
-                        contentContainerStyle={ContentStyle.contentStyle.gridStyle}
+                        contentContainerStyle={style.gridStyle}
                         renderRow={this.renderRow.bind(this)}>
                     </ListView>
                 </View>
@@ -53,12 +45,12 @@ class CourseList extends Component {
 
     renderRow(rowData) {
         return (
-            <TouchableOpacity style={ContentStyle.contentStyle.itemOpacity}
+            <TouchableOpacity style={style.itemOpacity}
                               onPress={this.pushToDetail.bind(this)}>
                 <Text >{rowData.title}
                 </Text>
                 <Image source={{uri: imgUrlPre + rowData.id}}
-                       style={ContentStyle.contentStyle.imgBack}></Image>
+                       style={style.imgBack}></Image>
             </TouchableOpacity>
         );
     }
@@ -67,7 +59,7 @@ class CourseList extends Component {
         return (
             <View>
                 <TopBar/>
-                <View style={ContentStyle.contentStyle.loadingView}>
+                <View style={style.loadingView}>
                     <ActivityIndicator
                         size="large"/>
                     <Text >加载中
@@ -105,5 +97,36 @@ class CourseList extends Component {
         ).done();
     }
 }
+
+const style = StyleSheet.create({
+    conentStyle: {
+        alignItems: 'center',
+        height: 500,
+        flex: 1,
+        justifyContent: 'flex-start',
+    },
+    gridStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+    },
+    listStyle: {
+        flex: 1,
+    },
+    itemOpacity: {
+        margin: 3,
+        width: 170,
+        height: 150,
+    },
+    loadingView: {
+        alignItems: 'center',
+        flex: 1,
+    },
+    imgBack: {
+        alignItems: 'center',
+        flex: 1,
+    }
+});
 
 module.exports = CourseList;

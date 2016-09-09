@@ -11,8 +11,8 @@ import {
     ToolbarAndroid,
 } from 'react-native';
 import TopStyle from './topstyle.js';
-let homeIcon = require('./bottom_item_qy_mine_selected.png');
-let searchIcon = require('./bottom_item_shouye_select.png');
+let homeIcon = require('./img/bottom_item_qy_mine_selected.png');
+let searchIcon = require('./img/bottom_item_shouye_select.png');
 
 class TopView extends Component {
     constructor(props) {

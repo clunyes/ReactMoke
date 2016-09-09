@@ -2,16 +2,9 @@
  * Created by Administrator on 2016/8/31.
  */
 'use strict'
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    Navigator,
-} from 'react-native';
-import TabNavigator from 'react-native-tab-navigator';
-import BottomBarStyle from './mainstyle.js';
+import React, {Component} from "react";
+import {StyleSheet, Image, Navigator, Platform} from "react-native";
+import TabNavigator from "react-native-tab-navigator";
 var Mine = require('../mine/mine.js');
 var Group = require('../group/group.js');
 var Download = require('../download/download.js');
@@ -39,9 +32,9 @@ class Main extends Component {
     renderTabItem(img, selectedImg, name, tag, componentName, component) {
         return <TabNavigator.Item
             title={name}
-            renderIcon={() => <Image source={{uri: img}} style={BottomBarStyle.bottomBarStyle.tabIcon}/>}
+            renderIcon={() => <Image source={{uri: img}} style={style.tabIcon}/>}
             renderSelectedIcon={() => <Image source={{uri: selectedImg}}
-                                             style={BottomBarStyle.bottomBarStyle.tabIcon}/>}
+                                             style={style.tabIcon}/>}
             onPress={() => {
                 this.setState({selectTab: tag})
             }}
@@ -62,5 +55,26 @@ class Main extends Component {
 
 
 }
+
+const style = StyleSheet.create({
+    bottomBar: {
+        flex: 4,
+        flexDirection: 'row',
+        height: 120,
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
+    },
+    bottomItem: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flex: 1,
+    },
+    tabIcon: {
+        width: Platform.OS === 'ios' ? 30 : 20,
+        height: Platform.OS === 'ios' ? 30 : 20,
+        resizeMode: 'stretch',
+    }
+});
 
 module.exports = Main;
