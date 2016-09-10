@@ -13,14 +13,14 @@ class TopView extends Component {
 
     render() {
         return (
-            <View style={style.topBar}>
-                <Text style={style.topText}>浙江省平台</Text>
-                <View style={style.imgMenu}>
+            <View style={styles.topBar}>
+                <Text style={styles.topText}>浙江省平台</Text>
+                <View style={styles.imgMenu}>
                     <TouchableOpacity onPress={()=>this.onPress('change-platform')}>
-                        <Image style={style.imgItem} source={require('./img/menu_change_platform.png')}></Image>
+                        <Image style={styles.imgItem} source={require('./img/menu_change_platform.png')}></Image>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.onPress('search')}>
-                        <Image style={style.imgItem} source={require('./img/menu_search.png')}></Image>
+                        <Image style={styles.imgItem} source={require('./img/menu_search.png')}></Image>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -32,7 +32,7 @@ class TopView extends Component {
     }
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     topBar: {
         flexDirection: 'row',
         height: 60,

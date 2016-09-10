@@ -34,11 +34,11 @@ class CourseList extends Component {
             <View >
                 <TopBar/>
                 <ScrollView/>
-                <View style={style.conentStyle}>
+                <View style={styles.conentStyle}>
                     <ListView
-                        style={style.listStyle}
+                        style={styles.listStyle}
                         dataSource={this.state.courses}
-                        contentContainerStyle={style.gridStyle}
+                        contentContainerStyle={styles.gridStyle}
                         renderRow={this.renderRow.bind(this)}>
                     </ListView>
                 </View>
@@ -48,12 +48,12 @@ class CourseList extends Component {
 
     renderRow(rowData) {
         return (
-            <TouchableOpacity style={style.itemOpacity}
+            <TouchableOpacity style={styles.itemOpacity}
                               onPress={this.pushToDetail.bind(this)}>
                 <Text >{rowData.title}
                 </Text>
                 <Image source={{uri: imgUrlPre + rowData.id}}
-                       style={style.imgBack}></Image>
+                       style={styles.imgBack}></Image>
             </TouchableOpacity>
         );
     }
@@ -62,7 +62,7 @@ class CourseList extends Component {
         return (
             <View>
                 <TopBar/>
-                <View style={style.loadingView}>
+                <View style={styles.loadingView}>
                     <ActivityIndicator
                         size="large"/>
                     <Text >加载中
@@ -102,7 +102,7 @@ class CourseList extends Component {
 
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     conentStyle: {
         alignItems: 'center',
         height: 500,
