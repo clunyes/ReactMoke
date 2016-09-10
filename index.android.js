@@ -3,6 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
+'use strict'
 import React, {Component} from "react";
 import {AppRegistry, StyleSheet, View} from "react-native";
 var Main = require('./js/main/main.js');

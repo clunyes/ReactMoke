@@ -4,11 +4,13 @@
 'use strict'
 import React, {Component} from "react";
 import {View, Text, Image, ListView, ActivityIndicator, TouchableOpacity, StyleSheet} from "react-native";
-const httpUrl = 'http://api.moocollege.com/mycloudedu/course/union/share_courses?current=1&page_size=10&union_id=19';
-const imgUrlPre = 'http://api.moocollege.com/mycloudedu/course/picture/get?width=340&course_id='
+const courseUrl = 'http://api.moocollege.com/mycloudedu/course/union/share_courses?current=1&page_size=10&union_id=19';
+const imgUrlPre = 'http://api.moocollege.com/mycloudedu/course/picture/get?width=340&course_id=';
+
 
 var CourseDetail = require('./courseDetail/courseDetail.js');
 var TopBar = require('../topview/topview.js');
+var ScrollView = require('../course/banner.js');
 
 class CourseList extends Component {
     constructor(props) {
@@ -29,8 +31,9 @@ class CourseList extends Component {
 
     renderListview() {
         return (
-            <View>
+            <View >
                 <TopBar/>
+                <ScrollView/>
                 <View style={style.conentStyle}>
                     <ListView
                         style={style.listStyle}
@@ -83,11 +86,11 @@ class CourseList extends Component {
 
 
     componentDidMount() {
-        this.fetchData();
+        this.fetchCourse();
     }
 
-    fetchData() {
-        fetch(httpUrl).then((response) => response.json()).then(
+    fetchCourse() {
+        fetch(courseUrl).then((response) => response.json()).then(
             responseData => {
                 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
                 this.setState({
@@ -96,6 +99,7 @@ class CourseList extends Component {
             }
         ).done();
     }
+
 }
 
 const style = StyleSheet.create({
