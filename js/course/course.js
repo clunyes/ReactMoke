@@ -3,14 +3,15 @@
  */
 'use strict'
 import React, {Component} from "react";
-import {View, Text, Image, ListView, ActivityIndicator, TouchableOpacity, StyleSheet} from "react-native";
+import {View, Text, Image, ListView, ActivityIndicator, TouchableOpacity, StyleSheet, ScrollView} from "react-native";
 const courseUrl = 'http://api.moocollege.com/mycloudedu/course/union/share_courses?current=1&page_size=10&union_id=19';
 const imgUrlPre = 'http://api.moocollege.com/mycloudedu/course/picture/get?width=340&course_id=';
 
 
 var CourseDetail = require('./courseDetail/courseDetail.js');
 var TopBar = require('../topview/topview.js');
-var ScrollView = require('../course/banner.js');
+var Banner = require('../course/banner.js');
+var ChooseCourse = require('../course/coursechoose.js');
 
 class CourseList extends Component {
     constructor(props) {
@@ -31,17 +32,20 @@ class CourseList extends Component {
 
     renderListview() {
         return (
-            <View >
-                <TopBar/>
-                <ScrollView/>
-                <View style={styles.conentStyle}>
-                    <ListView
-                        style={styles.listStyle}
-                        dataSource={this.state.courses}
-                        contentContainerStyle={styles.gridStyle}
-                        renderRow={this.renderRow.bind(this)}>
-                    </ListView>
-                </View>
+            <View style={styles.container}>
+                <ScrollView>
+                    <TopBar/>
+                    <Banner/>
+                    <ChooseCourse/>
+                    <View style={styles.conentStyle}>
+                        <ListView
+                            style={styles.listStyle}
+                            dataSource={this.state.courses}
+                            contentContainerStyle={styles.gridStyle}
+                            renderRow={this.renderRow.bind(this)}>
+                        </ListView>
+                    </View>
+                </ScrollView>
             </View>
         );
     }
@@ -103,6 +107,9 @@ class CourseList extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     conentStyle: {
         alignItems: 'center',
         height: 500,

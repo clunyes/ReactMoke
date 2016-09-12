@@ -2,12 +2,8 @@
  * Created by Administrator on 2016/8/31.
  */
 'use strict'
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
+import React, {Component} from "react";
+import {StyleSheet, View} from "react-native";
 
 class Mine extends Component {
     constructor(props) {
@@ -16,9 +12,6 @@ class Mine extends Component {
 
     render() {
         return (<View style={styles.container}>
-            <Text style={styles.welcome}>
-                我的
-            </Text>
         </View>);
     }
 }
@@ -31,10 +24,6 @@ const styles = StyleSheet.create(
             alignItems: 'center',
             backgroundColor: '#f5fcff',
         },
-        welcome: {
-            textAlign: 'center',
-            margin: 10,
-        }
     }
 )
 module.exports = Mine;
