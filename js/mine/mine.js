@@ -6,6 +6,7 @@ import React, {Component} from "react";
 import {StyleSheet, View} from "react-native";
 
 var MineTop = require('./mineTop.js');
+var MineView = require('./mineView.js')
 
 class Mine extends Component {
     constructor(props) {
@@ -15,6 +16,7 @@ class Mine extends Component {
     render() {
         return (<View style={styles.container}>
             <MineTop/>
+            <MineView/>
         </View>);
     }
 }

@@ -28,7 +28,6 @@ class ChooseCourse extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.horLine}/>
             </View>
         );
     }
@@ -40,12 +39,13 @@ class ChooseCourse extends Component {
 }
 const styles = StyleSheet.create({
         container: {
-            flex: 1,
             height: 50,
         },
         horContainer: {
             flex: 1,
             flexDirection: 'row',
+            borderBottomWidth: 0.5,
+            borderBottomColor: '#e8e8e8',
         },
         opaItem: {
             flex: 1,
@@ -71,11 +71,6 @@ const styles = StyleSheet.create({
             backgroundColor: '#e8e8e8',
             width: 0.5,
         },
-        horLine: {
-            backgroundColor: '#e8e8e8',
-            height: 0.5,
-            width: window.width,
-        }
     })
     ;
 module.exports = ChooseCourse;

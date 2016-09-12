@@ -24,7 +24,6 @@ class MineTop extends Component {
 const styles = StyleSheet.create(
     {
         container: {
-            flex: 1,
             justifyContent: 'flex-start',
         },
         imgBack: {
@@ -34,7 +33,10 @@ const styles = StyleSheet.create(
             alignItems: 'center',
             justifyContent: 'center'
         },
-        imgAvatar: {}
+        imgAvatar: {
+            width: 80,
+            height: 80,
+        }
     }
 )
 
