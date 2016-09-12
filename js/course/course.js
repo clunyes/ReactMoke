@@ -53,11 +53,12 @@ class CourseList extends Component {
     renderRow(rowData) {
         return (
             <TouchableOpacity style={styles.itemOpacity}
-                              onPress={this.pushToDetail.bind(this)}>
-                <Text >{rowData.title}
-                </Text>
+                              onPress={()=>this.pushToDetail()}>
                 <Image source={{uri: imgUrlPre + rowData.id}}
                        style={styles.imgBack}></Image>
+                <Text style={styles.title}>{rowData.title}</Text>
+                {/*<Text style={styles.teacher}>{(rowData)=>this.getOrgName(rowData)}</Text>*/}
+                <Text style={styles.teacher}>{rowData.college_name+ ' ' + rowData.teacher_name}</Text>
             </TouchableOpacity>
         );
     }
@@ -67,13 +68,25 @@ class CourseList extends Component {
             <View>
                 <TopBar/>
                 <View style={styles.loadingView}>
-                    <ActivityIndicator
-                        size="large"/>
-                    <Text >加载中
-                    </Text>
+                    <ActivityIndicator size="large"/>
+                    <Text >加载中</Text>
                 </View>
             </View>
         );
+    }
+
+    getOrgName(rowData) {
+        return rowData.college_name;
+        // if (!rowData.teacher_name && !rowData.college_name) {
+        //     return rowData.college_name + ' ' + rowData.teacher_name;
+        // } else {
+        //     if (!rowData.teacher_name) {
+        //         return rowData.teacher_name;
+        //     }
+        //     if (!rowData.college_name) {
+        //         return rowData.college_name;
+        //     }
+        // }
     }
 
     pushToDetail() {
@@ -107,37 +120,47 @@ class CourseList extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    conentStyle: {
-        alignItems: 'center',
-        height: 500,
-        flex: 1,
-        justifyContent: 'flex-start',
-    },
-    gridStyle: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        flexWrap: 'wrap',
-        alignItems: 'flex-start',
-    },
-    listStyle: {
-        flex: 1,
-    },
-    itemOpacity: {
-        margin: 3,
-        width: 170,
-        height: 150,
-    },
-    loadingView: {
-        alignItems: 'center',
-        flex: 1,
-    },
-    imgBack: {
-        alignItems: 'center',
-        flex: 1,
-    }
-});
+        container: {
+            flex: 1,
+        },
+        conentStyle: {
+            flex: 1,
+            justifyContent: 'flex-start',
+        },
+        gridStyle: {
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            flexWrap: 'wrap',
+            alignItems: 'flex-start',
+        },
+        listStyle: {
+            flex: 1,
+        },
+        itemOpacity: {
+            marginTop: 10,
+            margin: 3,
+            width: 170,
+            height: 150,
+        },
+        loadingView: {
+            alignItems: 'center',
+        },
+        imgBack: {
+            width: window.width / 2 - 6,
+            height: 100,
+        },
+        title: {
+            marginTop: 5,
+            fontSize: 12,
+            color: '#181818',
+        },
+        teacher: {
+            marginTop: 5,
+            borderTopWidth: 0.5,
+            fontSize: 10,
+            color: '#b9b9b9',
+        }
+    })
+    ;
 
 module.exports = CourseList;
