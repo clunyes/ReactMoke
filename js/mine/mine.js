@@ -5,6 +5,8 @@
 import React, {Component} from "react";
 import {StyleSheet, View} from "react-native";
 
+var MineTop = require('./mineTop.js');
+
 class Mine extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +14,7 @@ class Mine extends Component {
 
     render() {
         return (<View style={styles.container}>
+            <MineTop/>
         </View>);
     }
 }
@@ -20,9 +23,6 @@ const styles = StyleSheet.create(
     {
         container: {
             flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#f5fcff',
         },
     }
 )

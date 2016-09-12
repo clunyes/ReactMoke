@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         horLine: {
             backgroundColor: '#e8e8e8',
             height: 0.5,
-            alignSelf: 'stretch',
+            width: window.width,
         }
     })
     ;
