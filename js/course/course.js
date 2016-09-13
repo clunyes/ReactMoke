@@ -3,7 +3,17 @@
  */
 'use strict'
 import React, {Component} from "react";
-import {View, Text, Image, ListView, ActivityIndicator, TouchableOpacity, StyleSheet, ScrollView} from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    ListView,
+    ActivityIndicator,
+    TouchableOpacity,
+    StyleSheet,
+    ScrollView,
+    RefreshControl,
+} from "react-native";
 const courseUrl = 'http://api.moocollege.com/mycloudedu/course/union/share_courses?current=1&page_size=10&union_id=19';
 const imgUrlPre = 'http://api.moocollege.com/mycloudedu/course/picture/get?width=340&course_id=';
 
@@ -19,6 +29,7 @@ class CourseList extends Component {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             courses: null,
+            isRefreshing: false,
         }
     }
 
@@ -33,7 +44,15 @@ class CourseList extends Component {
     renderListview() {
         return (
             <View style={styles.container}>
-                <ScrollView>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    scrollEventThrottle={200}
+                    refreshControl=
+                        {<RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={()=>this.courseRefresh()}
+                            colors={['#00ddff', '#ffbb33', '#ff4444', '#aa66cc']}
+                            progressBackgroundColor='#ffffff'/>}>
                     <TopBar/>
                     <Banner/>
                     <ChooseCourse/>
@@ -55,17 +74,24 @@ class CourseList extends Component {
             <TouchableOpacity style={styles.itemOpacity}
                               onPress={()=>this.pushToDetail()}>
                 <Image source={{uri: imgUrlPre + rowData.id}}
-                       style={styles.imgBack}></Image>
+                       style={styles.imgBack}>
+                    <View style={styles.floatView}>
+                        <Text style={styles.courseState}>{this.getCourseState(rowData)}</Text>
+                        <View style={styles.timeView}>
+                            <Image source={require('./img/icon_clock_white.png')} style={styles.imgTime}/>
+                            <Text style={styles.courseDuration}>{this.getCourseDuration(rowData)}</Text>
+                        </View>
+                    </View>
+                </Image>
                 <Text style={styles.title}>{rowData.title}</Text>
-                {/*<Text style={styles.teacher}>{(rowData)=>this.getOrgName(rowData)}</Text>*/}
-                <Text style={styles.teacher}>{rowData.college_name+ ' ' + rowData.teacher_name}</Text>
+                <Text style={styles.teacher}>{this.getOrgName(rowData)}</Text>
             </TouchableOpacity>
         );
     }
 
     renderLoadingView() {
         return (
-            <View>
+            <View style={styles.container}>
                 <TopBar/>
                 <View style={styles.loadingView}>
                     <ActivityIndicator size="large"/>
@@ -75,18 +101,40 @@ class CourseList extends Component {
         );
     }
 
+    courseRefresh() {
+        this.setState({isRefreshing: true});
+        this.fetchCourse();
+    }
+
     getOrgName(rowData) {
-        return rowData.college_name;
-        // if (!rowData.teacher_name && !rowData.college_name) {
-        //     return rowData.college_name + ' ' + rowData.teacher_name;
-        // } else {
-        //     if (!rowData.teacher_name) {
-        //         return rowData.teacher_name;
-        //     }
-        //     if (!rowData.college_name) {
-        //         return rowData.college_name;
-        //     }
-        // }
+        if (rowData.teacher_name && rowData.college_name) {
+            return rowData.college_name + ' ' + rowData.teacher_name;
+        } else {
+            if (rowData.teacher_name) {
+                return rowData.teacher_name;
+            }
+            if (rowData.college_name) {
+                return rowData.college_name;
+            }
+        }
+    }
+
+    getCourseState(rowData) {
+        if (rowData.status == 0) {
+            return '即将开始';
+        } else if (rowData.status == 1) {
+            return '正在开课';
+        } else if (rowData.status == 2) {
+            return '已经完结';
+        }
+    }
+
+    getCourseDuration(rowData) {
+        if (rowData.weeks >= 999) {
+            return '' + '长期';
+        } else {
+            return rowData.weeks + ' 周';
+        }
     }
 
     pushToDetail() {
@@ -112,6 +160,7 @@ class CourseList extends Component {
                 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
                 this.setState({
                     courses: ds.cloneWithRows(responseData.data.datalist),
+                    isRefreshing: false,
                 });
             }
         ).done();
@@ -143,11 +192,39 @@ const styles = StyleSheet.create({
             height: 150,
         },
         loadingView: {
+            flex: 1,
             alignItems: 'center',
+            justifyContent: 'center',
         },
         imgBack: {
             width: window.width / 2 - 6,
             height: 100,
+            alignItems: 'flex-end',
+        },
+        floatView: {
+            backgroundColor: 'rgba(0,0,0,.5)',
+            position: 'absolute',
+            right: 0,
+            bottom: 1.5,
+            paddingLeft: 1.5,
+            paddingRight: 1.5,
+        },
+        timeView: {
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        imgTime: {
+            width: 10,
+            height: 10,
+        },
+        courseState: {
+            color: 'white',
+            fontSize: 11,
+        },
+        courseDuration: {
+            color: 'white',
+            fontSize: 11,
+            marginLeft: 2,
         },
         title: {
             marginTop: 5,
