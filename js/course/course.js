@@ -140,7 +140,7 @@ class CourseList extends Component {
             // alert('height***' + height);
             // alert('y***' + y);
             // alert(data);
-            alert('差值*******' + (y + height) / PixelRatio.get());
+            // alert('差值*******' + (y + height) / PixelRatio.get());
             if (Math.abs((y + height) / PixelRatio.get()) < 300) {//准确值为283.25，为哪块的值暂时不清楚
                 this.onEnd();
             }
@@ -200,18 +200,20 @@ class CourseList extends Component {
     fetchCourse() {
         fetch(courseUrl + '&current=' + page).then((response) => response.json()).then(
             responseData => {
-                let myCourses = responseData.data.datalist;
-                if (page != 1) {
-                    this.localCourses = this.localCourses.concat(myCourses);
-                } else {
-                    this.localCourses = myCourses;
+                if (responseData && responseData.data && responseData.data.datalist) {
+                    let myCourses = responseData.data.datalist;
+                    if (page != 1) {
+                        this.localCourses = this.localCourses.concat(myCourses);
+                    } else {
+                        this.localCourses = myCourses;
+                    }
+                    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+                    this.setState({
+                        courses: ds.cloneWithRows(this.localCourses),
+                        isRefreshing: false,
+                    });
+                    onload = false;
                 }
-                const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-                this.setState({
-                    courses: ds.cloneWithRows(this.localCourses),
-                    isRefreshing: false,
-                });
-                onload = false;
             }
         ).done();
     }
@@ -233,7 +235,7 @@ const styles = StyleSheet.create({
         },
         gridStyle: {
             flexDirection: 'row',
-            justifyContent: 'space-around',
+            justifyContent: 'flex-start',
             flexWrap: 'wrap',
             alignItems: 'flex-start',
         },
@@ -242,14 +244,13 @@ const styles = StyleSheet.create({
         },
         itemOpacity: {
             marginTop: 10,
-            margin: 3,
+            margin: 5,
             width: 170,
             height: 150,
         },
         loadingView: {
             flex: 1,
             alignItems: 'center',
-            justifyContent: 'center',
         },
         imgBack: {
             width: window.width / 2 - 6,

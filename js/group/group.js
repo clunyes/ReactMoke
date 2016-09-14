@@ -8,6 +8,7 @@ import {
     Text,
     View,
 } from 'react-native';
+var TopBar = require('../topview/topview.js');
 
 class Group extends Component {
     constructor(props) {
@@ -16,9 +17,7 @@ class Group extends Component {
 
     render() {
         return (<View style={styles.container}>
-            <Text style={styles.welcome}>
-                小组
-            </Text>
+            <TopBar/>
         </View>);
     }
 }
@@ -27,9 +26,6 @@ const styles = StyleSheet.create(
     {
         container: {
             flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#f5fcff',
         },
         welcome: {
             textAlign: 'center',
@@ -37,4 +33,5 @@ const styles = StyleSheet.create(
         }
     }
 )
+
 module.exports = Group;
