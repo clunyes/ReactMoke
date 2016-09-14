@@ -13,8 +13,9 @@ import {
     StyleSheet,
     ScrollView,
     RefreshControl,
+    PixelRatio,
 } from "react-native";
-const courseUrl = 'http://api.moocollege.com/mycloudedu/course/union/share_courses?current=1&page_size=10&union_id=19';
+const courseUrl = 'http://api.moocollege.com/mycloudedu/course/union/share_courses?page_size=10&union_id=19';
 const imgUrlPre = 'http://api.moocollege.com/mycloudedu/course/picture/get?width=340&course_id=';
 
 
@@ -22,6 +23,13 @@ var CourseDetail = require('./courseDetail/courseDetail.js');
 var TopBar = require('../topview/topview.js');
 var Banner = require('../course/banner.js');
 var ChooseCourse = require('../course/coursechoose.js');
+
+let page;
+let onload;
+let _scrollview;
+
+var RCTUIManager = require('NativeModules').UIManager;
+
 
 class CourseList extends Component {
     constructor(props) {
@@ -31,6 +39,8 @@ class CourseList extends Component {
             courses: null,
             isRefreshing: false,
         }
+        page = 1;
+        onload = false;
     }
 
     render() {
@@ -45,8 +55,15 @@ class CourseList extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView
+                    ref={(scrollview) => {
+                        _scrollview = scrollview;
+                    }}
                     showsVerticalScrollIndicator={false}
-                    scrollEventThrottle={200}
+                    onScrollEndDrag={(event)=> {
+                        {
+                            this.onMove(event, _scrollview);
+                        }
+                    }}
                     refreshControl=
                         {<RefreshControl
                             refreshing={this.state.isRefreshing}
@@ -102,9 +119,30 @@ class CourseList extends Component {
     }
 
     courseRefresh() {
+        page = 1;
         this.setState({isRefreshing: true});
         this.fetchCourse();
     }
+
+    onEnd() {
+        if (!onload) {
+            onload = true;
+            page += 1;
+            this.fetchCourse();
+        }
+    }
+
+    onMove(event, scrollview) {
+        let height = 0;
+        let y = event.nativeEvent.contentOffset.y;
+        RCTUIManager.measure(scrollview.getInnerViewNode(), (...data)=> {
+            height = data[3];
+            if (Math.abs(y * PixelRatio.get() - height) < 50) {
+                this.onEnd();
+            }
+        });
+    }
+
 
     getOrgName(rowData) {
         if (rowData.teacher_name && rowData.college_name) {
@@ -155,13 +193,19 @@ class CourseList extends Component {
     }
 
     fetchCourse() {
-        fetch(courseUrl).then((response) => response.json()).then(
+        fetch(courseUrl + '&current=' + page).then((response) => response.json()).then(
             responseData => {
+                // if (_listview) {
+                //     for (var i = 0; i < _listview.dataSource.getRowCount(); i++) {
+                //         responseData.data.datalist += _listview.dataSource.getRowData(i);
+                //     }
+                // }
                 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
                 this.setState({
                     courses: ds.cloneWithRows(responseData.data.datalist),
                     isRefreshing: false,
                 });
+                onload = false;
             }
         ).done();
     }
