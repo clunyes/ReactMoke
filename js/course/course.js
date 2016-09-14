@@ -30,11 +30,9 @@ let _scrollview;
 
 var RCTUIManager = require('NativeModules').UIManager;
 
-
 class CourseList extends Component {
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             courses: null,
             isRefreshing: false,
@@ -134,10 +132,16 @@ class CourseList extends Component {
 
     onMove(event, scrollview) {
         let height = 0;
-        let y = event.nativeEvent.contentOffset.y;
+        let y = 0;
+        //(x, y, width, height, pageX, pageY)
         RCTUIManager.measure(scrollview.getInnerViewNode(), (...data)=> {
             height = data[3];
-            if (Math.abs(y * PixelRatio.get() - height) < 50) {
+            y = data[5];
+            // alert('height***' + height);
+            // alert('y***' + y);
+            // alert(data);
+            alert('差值*******' + (y + height) / PixelRatio.get());
+            if (Math.abs((y + height) / PixelRatio.get()) < 300) {//准确值为283.25，为哪块的值暂时不清楚
                 this.onEnd();
             }
         });
@@ -189,25 +193,32 @@ class CourseList extends Component {
 
 
     componentDidMount() {
+        this.localCourses = [];
         this.fetchCourse();
     }
 
     fetchCourse() {
         fetch(courseUrl + '&current=' + page).then((response) => response.json()).then(
             responseData => {
-                // if (_listview) {
-                //     for (var i = 0; i < _listview.dataSource.getRowCount(); i++) {
-                //         responseData.data.datalist += _listview.dataSource.getRowData(i);
-                //     }
-                // }
-                var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+                let myCourses = responseData.data.datalist;
+                if (page != 1) {
+                    this.localCourses = this.localCourses.concat(myCourses);
+                } else {
+                    this.localCourses = myCourses;
+                }
+                const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
                 this.setState({
-                    courses: ds.cloneWithRows(responseData.data.datalist),
+                    courses: ds.cloneWithRows(this.localCourses),
                     isRefreshing: false,
                 });
                 onload = false;
             }
         ).done();
+    }
+
+    getDataSource(courses) {
+
+        return this.state.ds.cloneWithRows(localCourses);
     }
 
 }
