@@ -8,7 +8,6 @@ import {
     Text,
     Image,
     ListView,
-    ActivityIndicator,
     TouchableOpacity,
     StyleSheet,
     ScrollView,
@@ -23,6 +22,7 @@ var CourseDetail = require('./courseDetail/courseDetail.js');
 var TopBar = require('../topview/topview.js');
 var Banner = require('../course/banner.js');
 var ChooseCourse = require('../course/coursechoose.js');
+var LoadingView = require('../loading/loadview.js');
 
 let page;
 let onload;
@@ -108,10 +108,7 @@ class CourseList extends Component {
         return (
             <View style={styles.container}>
                 <TopBar/>
-                <View style={styles.loadingView}>
-                    <ActivityIndicator size="large"/>
-                    <Text >加载中</Text>
-                </View>
+                <LoadingView word="加载课程中..."/>
             </View>
         );
     }
@@ -218,81 +215,72 @@ class CourseList extends Component {
         ).done();
     }
 
-    getDataSource(courses) {
-
-        return this.state.ds.cloneWithRows(localCourses);
-    }
-
 }
 
 const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-        },
-        conentStyle: {
-            flex: 1,
-            justifyContent: 'flex-start',
-        },
-        gridStyle: {
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            flexWrap: 'wrap',
-            alignItems: 'flex-start',
-        },
-        listStyle: {
-            flex: 1,
-        },
-        itemOpacity: {
-            marginTop: 10,
-            margin: 5,
-            width: 170,
-            height: 150,
-        },
-        loadingView: {
-            flex: 1,
-            alignItems: 'center',
-        },
-        imgBack: {
-            width: window.width / 2 - 6,
-            height: 100,
-            alignItems: 'flex-end',
-        },
-        floatView: {
-            backgroundColor: 'rgba(0,0,0,.5)',
-            position: 'absolute',
-            right: 0,
-            bottom: 1.5,
-            paddingLeft: 1.5,
-            paddingRight: 1.5,
-        },
-        timeView: {
-            flexDirection: 'row',
-            alignItems: 'center',
-        },
-        imgTime: {
-            width: 10,
-            height: 10,
-        },
-        courseState: {
-            color: 'white',
-            fontSize: 11,
-        },
-        courseDuration: {
-            color: 'white',
-            fontSize: 11,
-            marginLeft: 2,
-        },
-        title: {
-            marginTop: 5,
-            fontSize: 12,
-            color: '#181818',
-        },
-        teacher: {
-            marginTop: 5,
-            borderTopWidth: 0.5,
-            fontSize: 10,
-            color: '#b9b9b9',
-        }
-    });
+    container: {
+        flex: 1,
+    },
+    conentStyle: {
+        flex: 1,
+        justifyContent: 'flex-start',
+    },
+    gridStyle: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+    },
+    listStyle: {
+        flex: 1,
+    },
+    itemOpacity: {
+        marginTop: 10,
+        margin: 5,
+        width: 170,
+        height: 150,
+    },
+    imgBack: {
+        width: window.width / 2 - 6,
+        height: 100,
+        alignItems: 'flex-end',
+    },
+    floatView: {
+        backgroundColor: 'rgba(0,0,0,.5)',
+        position: 'absolute',
+        right: 0,
+        bottom: 1.5,
+        paddingLeft: 1.5,
+        paddingRight: 1.5,
+    },
+    timeView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    imgTime: {
+        width: 10,
+        height: 10,
+    },
+    courseState: {
+        color: 'white',
+        fontSize: 11,
+    },
+    courseDuration: {
+        color: 'white',
+        fontSize: 11,
+        marginLeft: 2,
+    },
+    title: {
+        marginTop: 5,
+        fontSize: 12,
+        color: '#181818',
+    },
+    teacher: {
+        marginTop: 5,
+        borderTopWidth: 0.5,
+        fontSize: 10,
+        color: '#b9b9b9',
+    }
+});
 
 module.exports = CourseList;

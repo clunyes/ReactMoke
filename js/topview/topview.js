@@ -36,8 +36,8 @@ class TopView extends Component {
                     </TouchableOpacity>
                 </View>
             );
-        }else{
-            return(
+        } else {
+            return (
                 <View style={styles.imgMenu}>
                     <TouchableOpacity onPress={()=>this.onPress('search')}>
                         <Image style={styles.imgItem} source={require('./img/menu_search.png')}></Image>
