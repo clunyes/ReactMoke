@@ -14,7 +14,19 @@ class TopView extends Component {
     render() {
         return (
             <View style={styles.topBar}>
-                <Text style={styles.topText}>浙江省平台</Text>
+                <Text style={styles.topText}>{this.props.topText}</Text>
+                {this.renderMenu()}
+            </View>
+        );
+    }
+
+    onPress(keyword) {
+        alert(keyword);
+    }
+
+    renderMenu() {
+        if (this.props.style == "home") {
+            return (
                 <View style={styles.imgMenu}>
                     <TouchableOpacity onPress={()=>this.onPress('change-platform')}>
                         <Image style={styles.imgItem} source={require('./img/menu_change_platform.png')}></Image>
@@ -23,12 +35,19 @@ class TopView extends Component {
                         <Image style={styles.imgItem} source={require('./img/menu_search.png')}></Image>
                     </TouchableOpacity>
                 </View>
-            </View>
-        );
-    }
-
-    onPress(keyword) {
-        alert(keyword);
+            );
+        }else{
+            return(
+                <View style={styles.imgMenu}>
+                    <TouchableOpacity onPress={()=>this.onPress('search')}>
+                        <Image style={styles.imgItem} source={require('./img/menu_search.png')}></Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.onPress('menu_create')}>
+                        <Image style={styles.imgItem} source={require('./img/menu_create.png')}></Image>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
     }
 }
 

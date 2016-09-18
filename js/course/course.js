@@ -52,6 +52,7 @@ class CourseList extends Component {
     renderListview() {
         return (
             <View style={styles.container}>
+                <TopBar topText="浙江省平台" style="home"/>
                 <ScrollView
                     ref={(scrollview) => {
                         _scrollview = scrollview;
@@ -68,7 +69,6 @@ class CourseList extends Component {
                             onRefresh={()=>this.courseRefresh()}
                             colors={['#00ddff', '#ffbb33', '#ff4444', '#aa66cc']}
                             progressBackgroundColor='#ffffff'/>}>
-                    <TopBar/>
                     <Banner/>
                     <ChooseCourse/>
                     <View style={styles.conentStyle}>

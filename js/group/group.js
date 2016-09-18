@@ -7,18 +7,32 @@ import {
     StyleSheet,
     Text,
     View,
+    ListView,
 } from 'react-native';
 var TopBar = require('../topview/topview.js');
 
 class Group extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            groups: null,
+        }
     }
 
     render() {
         return (<View style={styles.container}>
-            <TopBar/>
+            <TopBar topText="小组" style="group"/>
+            <ListView
+                style={styles.listStyle}
+                dataSource={this.state.groups}
+                contentContainerStyle={}
+                renderRow={this.renderRow.bind(this)}>
+            </ListView>
         </View>);
+    }
+
+    renderRow() {
+        
     }
 }
 
