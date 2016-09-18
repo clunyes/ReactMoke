@@ -293,7 +293,6 @@ const styles = StyleSheet.create({
             fontSize: 10,
             color: '#b9b9b9',
         }
-    })
-    ;
+    });
 
 module.exports = CourseList;
