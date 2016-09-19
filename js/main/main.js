@@ -20,11 +20,11 @@ class Main extends Component {
     render() {
         return (
             <TabNavigator>
-                {this.renderTabItem('bottom_item_course', 'bottom_item_course_selected', '课程', 'course', '课程', Course)}
-                {this.renderTabItem('bottom_item_group', 'bottom_item_group_selected', '小组', 'group', '小组', Group)}
-                {this.renderTabItem('bottom_item_download', 'bottom_item_download_selected', '下载', 'download', '下载',
+                {this.renderTabItem(require('./img/bottom_item_course.png'), require('./img/bottom_item_course_selected.png'), '课程', 'course', '课程', Course)}
+                {this.renderTabItem(require('./img/bottom_item_group.png'), require('./img/bottom_item_group_selected.png'), '小组', 'group', '小组', Group)}
+                {this.renderTabItem(require('./img/bottom_item_download.png'), require('./img/bottom_item_download_selected.png'), '下载', 'download', '下载',
                     Download)}
-                {this.renderTabItem('bottom_item_mine', 'bottom_item_mine_selected', '我的', 'mine', '我的', Mine)}
+                {this.renderTabItem(require('./img/bottom_item_mine.png'), require('./img/bottom_item_mine_selected.png'), '我的', 'mine', '我的', Mine)}
             </TabNavigator>
         );
     }
@@ -32,8 +32,8 @@ class Main extends Component {
     renderTabItem(img, selectedImg, name, tag, componentName, component) {
         return <TabNavigator.Item
             title={name}
-            renderIcon={() => <Image source={{uri: img}} style={styles.tabIcon}/>}
-            renderSelectedIcon={() => <Image source={{uri: selectedImg}}
+            renderIcon={() => <Image source={img} style={styles.tabIcon}/>}
+            renderSelectedIcon={() => <Image source={selectedImg}
                                              style={styles.tabIcon}/>}
             selectedTitleStyle={styles.selectedTitle}
             onPress={() => {
