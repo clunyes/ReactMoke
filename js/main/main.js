@@ -32,9 +32,10 @@ class Main extends Component {
     renderTabItem(img, selectedImg, name, tag, componentName, component) {
         return <TabNavigator.Item
             title={name}
-            renderIcon={() => <Image source={{uri: img}} style={style.tabIcon}/>}
+            renderIcon={() => <Image source={{uri: img}} style={styles.tabIcon}/>}
             renderSelectedIcon={() => <Image source={{uri: selectedImg}}
-                                             style={style.tabIcon}/>}
+                                             style={styles.tabIcon}/>}
+            selectedTitleStyle={styles.selectedTitle}
             onPress={() => {
                 this.setState({selectTab: tag})
             }}
@@ -56,7 +57,7 @@ class Main extends Component {
 
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     bottomBar: {
         flex: 4,
         flexDirection: 'row',
@@ -74,7 +75,10 @@ const style = StyleSheet.create({
         width: Platform.OS === 'ios' ? 30 : 20,
         height: Platform.OS === 'ios' ? 30 : 20,
         resizeMode: 'stretch',
-    }
+    },
+    selectedTitle: {
+        color: '#00aa91',
+    },
 });
 
 module.exports = Main;
