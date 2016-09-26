@@ -9,7 +9,8 @@ import {
     View,
     TouchableOpacity,
 } from 'react-native';
-var CourseDetail = require('../course/courseDetail/courseDetail.js');
+var DownloadView = require('./downloadView.js');
+var TopBar = require('../topview/topview.js');
 
 class Download extends Component {
     constructor(props) {
@@ -18,26 +19,10 @@ class Download extends Component {
 
     render() {
         return (
-
             <View style={styles.container}>
-                <TouchableOpacity
-                    onPress={()=> {
-                        this.pushToDetail()
-                    }}>
-                    <Text style={styles.welcome}>
-                        下载
-                    </Text>
-                </TouchableOpacity>
+                <TopBar topText="在教课程" style="download"/>
+                <DownloadView navi={this.props}/>
             </View>
-        );
-    }
-
-    pushToDetail() {
-        this.props.navigator.push(
-            {
-                component: CourseDetail,
-                title: '详情页'
-            }
         );
     }
 }
@@ -46,14 +31,7 @@ const styles = StyleSheet.create(
     {
         container: {
             flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#f5fcff',
         },
-        welcome: {
-            textAlign: 'center',
-            margin: 10,
-        }
     }
 )
 module.exports = Download;

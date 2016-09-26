@@ -36,7 +36,7 @@ class TopView extends Component {
                     </TouchableOpacity>
                 </View>
             );
-        } else {
+        } else if (this.props.style == "group") {
             return (
                 <View style={styles.imgMenu}>
                     <TouchableOpacity onPress={()=>this.onPress('search')}>
@@ -47,6 +47,22 @@ class TopView extends Component {
                     </TouchableOpacity>
                 </View>
             );
+        } else if (this.props.style == "download") {
+            return (
+                <View style={styles.imgMenu}>
+                    <TouchableOpacity onPress={()=>this.onPress('发布课程')}>
+                        <Image style={styles.imgItem} source={require('./img/menu_search.png')}></Image>
+                    </TouchableOpacity>
+                </View>
+            )
+        } else if (this.props.style == "detail") {
+            return (
+                <View style={styles.imgMenu}>
+                    <TouchableOpacity onPress={()=>this.onPress('保存')}>
+                        <Image style={styles.imgItem} source={require('./img/menu_search.png')}></Image>
+                    </TouchableOpacity>
+                </View>
+            )
         }
     }
 }

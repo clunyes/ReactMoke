@@ -47,7 +47,7 @@ class Main extends Component {
                 }}
                 renderScene={(route, navigator)=> {
                     let Component = route.component;
-                    return <Component {...route.passProps} navigator={navigator}/>
+                    return <Component {...route.params} navigator={navigator}/>
                 }
                 }
             />

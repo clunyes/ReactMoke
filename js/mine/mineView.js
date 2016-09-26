@@ -4,6 +4,7 @@
 'use strict'
 import React, {Component} from "react";
 import {StyleSheet, View, Image, Text, TouchableOpacity} from "react-native";
+var DrawerDetail = require('../download/drawerDetail.js');
 
 class MineView extends Component {
     constructor(props) {
@@ -39,6 +40,7 @@ class MineView extends Component {
                 <View style={styles.viewDevider}>
                 </View>
                 <TouchableOpacity onPress={()=>this.onPressItem('设置')}>
+                {/*<TouchableOpacity onPress={()=>this.onGo()}>*/}
                     <View style={styles.item}>
                         < Image source={require('./img/iv_setting.png')} style={styles.img}></Image>
                         <Text>设置</Text>
@@ -51,6 +53,16 @@ class MineView extends Component {
     onPressItem(word) {
         alert(word);
     }
+
+    // onGo(){
+    //     const {navigator} = this.props;
+    //     if (navigator) {
+    //         navigator.push({
+    //             name: 'DrawerDetail',
+    //             component: DrawerDetail,
+    //         })
+    //     }
+    // }
 }
 const styles = StyleSheet.create(
     {
